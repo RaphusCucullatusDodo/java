@@ -11,6 +11,7 @@ public class VersionControlTest {
     public static void main(String[] args) {
         for (int i = 0; i < 3; i++) {
             System.out.println("实现了输出文字");
+            System.out.println("实现了输出文字");
         }
     }
 }
