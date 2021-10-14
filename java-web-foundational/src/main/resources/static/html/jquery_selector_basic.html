@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery选择器-基本选择器</title>
+    <!--    引入外界jQuery的js文件  -->
+    <script src="../js/jquery-3.6.0.js"></script>
+</head>
+<body>
+<h1>jQuery基本选择器</h1>
+<div>渡渡鸟学java</div>
+<div>渡渡鸟学linux</div>
+<span class="custom_style">渡渡鸟学前端</span>
+<p id="content">好好学习,天天向上</p>
+<script>
+    console.log("根据id查找元素:" + $("#content").text())
+    console.log("根据element查找元素:" + $("h1").text())
+    console.log("根据class查找元素:" + $(".custom_style").text())
+</script>
+</body>
+</html>

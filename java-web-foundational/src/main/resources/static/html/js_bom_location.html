@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript编程之BOM编程-lacation对象</title>
+</head>
+<body>
+
+<script>
+    //需求 三秒钟之后跳转指定页面
+    window.setTimeout(function () {
+        //弹窗显示当前页面地址
+        alert(location.href)
+        location.href = "https://www.baidu.com"
+    }, 3000)
+
+
+</script>
+</body>
+</html>

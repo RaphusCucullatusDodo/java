@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript编程之DOM编程-获取元素</title>
+</head>
+<body>
+<div id="java">跟光磊学Java</div>
+<div class="javascript">渡渡鸟学前段</div>
+<span name="front" class="javascript">HTML</span>
+<span name="front" class="javascript">CSS</span>
+<span name="front" class="javascript">JavaScript</span>
+
+<script>
+    //根据属性获取
+    //根据id获取元素,返回element
+    console.log("根据id获取元素,返回element")
+    let divElement = document.getElementById("java");
+    console.log(divElement)
+    //根据class获取元素,返回element
+    console.log("根据class获取元素,返回element")
+    let javaScriptClassElement = document.getElementsByClassName("javascript");
+    for (let i = 0; i < javaScriptClassElement.length; i++) {
+        console.log(javaScriptClassElement[i])
+    }
+    //根据name获取元素,返回element
+    console.log("根据name获取元素,返回element")
+    let frontNameElement = document.getElementsByName("front");
+    for (let i = 0; i < frontNameElement.length; i++) {
+        console.log(frontNameElement[i])
+    }
+    //根据标签获
+    console.log("根据标签获")
+    let spanTagElement = document.getElementsByTagName("span");
+    for (let i = 0; i < spanTagElement.length; i++) {
+        console.log(spanTagElement[i])
+        //获取单个元素（id选择器）
+        console.log("获取单个元素（id选择器）")
+        let element = document.querySelector("#java");
+        console.log(element)
+        //获取多个元素（类选择器）
+        console.log("获取单个元素（类选择器）")
+        let elementNodeListOf = document.querySelectorAll(".javascript");
+        for (let j = 0; j < elementNodeListOf.length; j++) {
+            console.log(elementNodeListOf[j])
+        }
+
+    }
+</script>
+</body>
+</html>
+
+

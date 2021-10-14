@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery操作标签文本和值</title>
+    <script src="../js/jquery-3.6.0.js"></script>
+</head>
+<body>
+<h1>jQuery操作标签文本和值</h1>
+<input type="text" name="name" id="name" value="raphus"/>
+<div id="desc"><h1>渡渡鸟学Java</h1></div>
+
+<script>
+    //获取文本框的值   $("#id值")id选择器
+    let inputElementValue = $("#name").val();
+    console.log("inputElementValue:" + inputElementValue)
+    //修改文本框的值
+    $("#name").val("jack")
+    console.log("inputElementValue:" + inputElementValue)
+
+    //获取div的全部内容
+    let divHtml = $("#desc").html();
+    console.log("divHtml:" + divHtml)
+
+    //获取div的文本
+    let divText = $("#desc").text();
+    console.log("divText" + divText)
+
+    $("#desc").html("<h1>渡渡鸟学前端<h1/>");
+    //$("#desc").text("<h1>渡渡鸟学前端<h1/>");
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery实现表格隔行换色</title>
+    <script src="../js/jquery-3.6.0.js"></script>
+    <style>
+        table {
+            width: 720px;
+            text-align: left;
+        }
+
+        .greenStyle {
+            background-color: green;
+        }
+
+        .yellowStyle {
+            background-color: yellow;
+        }
+
+        .redStyle {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<h1>jQuery实现表格隔行换色</h1>
+<table>
+    <tr>
+        <td>分类ID</td>
+        <td>分类名称</td>
+        <td>分类描述</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>手机</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>电脑</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>家居装饰</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>鞋靴箱包</td>
+        <td></td>
+    </tr>
+</table>
+
+<script>
+    // 表格索引(从零开始)奇数行背景颜色设置为黄色
+    $("tr:odd").addClass("yellowStyle")
+
+    //表格索引(从零开始)偶数行背景颜色设置为绿色
+    $("tr:even").addClass("greenStyle")
+
+
+    //在隔行换色的基础上增加 onmouseover 变红 和 onmouseout 变回原来颜色
+    $("tr").mouseover(function () {
+        // 拿到鼠标光标所在行
+        $(this).addClass("redStyle")
+    }).mouseout(function () {
+        // 拿到鼠标光标所在行
+        $(this).removeClass("redStyle")
+    })
+</script>
+</body>
+</html>

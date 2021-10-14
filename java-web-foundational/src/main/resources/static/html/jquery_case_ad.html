@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery实现页面定时弹广告</title>
+    <script src="../js/jquery-3.6.0.js"></script>
+</head>
+<body>
+<h1>jQuery实现页面定时弹广告</h1>
+<!--  页面样式:页面加载时不显示图片  -->
+<div id="ad" style="display: none"><img src="../images/ad.jfif"/></div>
+
+<script>
+    //需求 页面加载完成三秒以后弹个广告(显示图片) 三秒后隐藏
+    /**
+     * 显示广告 后隐藏 广告
+     */
+    function sildeDownImage() {
+        //显示广告
+        $("div").slideDown(2000, function () {
+            //隐藏广告
+            $("div").slideUp(1500)
+
+        })
+    }
+
+    //页面加载完成后每隔五秒 循环
+    // setInterval(sildeDownImage, 5000)
+    //页面加载完成后隔五秒 只执行一次
+    setTimeout(sildeDownImage, 5000)
+</script>
+
+
+</body>
+</html>

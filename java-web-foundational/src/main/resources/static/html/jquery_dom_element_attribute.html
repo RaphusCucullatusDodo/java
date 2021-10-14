@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery操作标签的属性</title>
+    <script src="../js/jquery-3.6.0.js"></script>
+</head>
+<body>
+<h1>jQuery操作标签的属性</h1>
+<input type="text" name="username" id="username" tt="zz">
+
+<script>
+    //将文本框的name属性修改为nickname(可修改内置属性与自定义属性)
+    $("#username").attr("name", "nickname")
+    let name = $("#username").attr("name")
+    console.log("name_attr:" + name)
+
+    $("#username").attr("tt", "yy")
+    name = $("#username").attr("name")
+    console.log("name_attr:" + name)
+
+    //将文本框的name属性修改为nickname(只可修改内置属性,或者如果属性是boolean类型的就用prop修改)
+    $("#username").prop("name", "nickname")
+    name = $("#username").attr("name")
+    console.log("name_prop:" + name)
+
+</script>
+</body>
+</html>

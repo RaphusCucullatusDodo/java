@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>账号管理之异步查询所有账号</title>
+    <script src="../../js/jquery-3.6.0.js"></script>
+</head>
+<body>
+
+<h1>展示所有用户列表</h1>
+
+<div style="color: red" id="errorMessage"></div>
+<table id="accountListTable" width="960px">
+    <tr>
+        <th>编号</th>
+        <th>账户</th>
+        <th>资金</th>
+        <th>状态</th>
+        <th>创建日期</th>
+        <th>修改时间</th>
+        <th>操作</th>
+    </tr>
+</table>
+
+<div>
+    <a href="account_add.html" target="_blank">添加账户</a>
+</div>
+
+<script>
+    // $.post("请求地址","post参数",function(result){}) result默认为text(普通文本字符串)
+    $.post("../../async/account", "method=findAllAccount", function (result) {
+        //如果服务器没有异常
+        if (result.flag) {
+            let accountVOList = result.data;
+            $.each(accountVOList, function (index, account) {
+                let status = "";
+                if (account.status == 0) {
+                    status = "禁用";
+                } else {
+                    status = "启用";
+                }
+                $("#accountListTable").append(
+                    "<tr>" +
+                    "<td>" + (index + 1) + "</td>" +
+                    "<td>" + account.name + "</td>" +
+                    "<td>" + account.balance + "</td>" +
+                    "<td>" + account.status + "</td>" +
+                    "<td>" + account.createDate + "</td>" +
+                    "<td>" + account.updateDate + "</td>" +
+                    "<td>" +
+                    "<a href=\"#\" onClick=\"deleteAccountById('" + account.id + "','" + account.name + "')\">删除账号</a>"
+                    + "  <a href=\"#\" onClick=\"toAccountUpdatePage('" + account.id + "')\">修改账号</a>" +
+                    "</td>" +
+                    "</tr>"
+                )
+            })
+        } else {
+            //服务器有异常
+            $("#errorMessage").html("服务器异常")
+        }
+    }, "json")
+
+    function deleteAccountById(id, name) {
+        let flag = confirm("确认要删除" + name + "吗?");
+        if (flag) {
+            // $.post("请求地址","post参数",function(result){}) result默认为text(普通文本字符串)
+            $.post("../../async/account", "method=deleteAccountById&id=" + id, function (result) {
+                if (result.flag) {
+                    if (result.data) {
+                        alert("删除成功")
+                        //删除成功后跳转到账号列表页面
+                        location.href = "account_list.html"
+                    }
+                } else {
+                    alert("删除失败")
+                }
+            }, "json")
+        }
+    }
+
+    /**
+     * 跳转到修改账号页面
+     * @param id
+     */
+
+    function toAccountUpdatePage(id) {
+        window.location.href = "account_update.html?id=" + id
+    }
+
+
+</script>
+</body>
+</html>

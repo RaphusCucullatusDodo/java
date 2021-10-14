@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue绑定点击事件</title>
+    <!-- 1.引入vue.js -->
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<h1>Vue绑定点击事件</h1>
+<!-- 2.准备Vue视图 -->
+<div id="app">
+    <!--
+      v-html绑定标签体的内容
+    -->
+    <div v-html="message"></div>
+    <!--
+    两种点击事件的方式
+    v-on:click="function"
+    @click="function"
+    -->
+    <input type="button" value="changeText" @click="handleClick"/><br/>
+
+</div>
+
+<script>
+    <!-- 3.创建Vue对象 -->
+    new Vue({
+        el: "#app",//指定Vue视图
+        data: {//数据模型
+            message: "hello Vue"
+        },
+        methods: {
+            //处理点击事件
+            handleClick() {
+                //修改数据模型绑定的视图对应的数据
+                this.message = "hello world"
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML常用标签 - 表单标签</title>
+</head>
+<body>
+<!--
+    表单标签的介绍
+    表单标签 <form></form>,
+
+    表单标签的属性
+     action属性 决定了往哪个服务器路径提交数据
+     method属性 决定提交数据方式, get或post
+     enctype属性 决定采用什么数据类型(数据格式)提交
+
+    常用的表单项如下所示
+    输入框
+    按钮
+    下拉框
+    单选框
+    多选框
+    文件上传组件
+    文本域
+
+    表单项的属性说明
+    name属性 只有当一个表单设置了name之后,表单项的数据才能提交到服务器,而且表单项都是以name=value的形式提交
+    value属性
+        对于按钮 value为按钮上的文本
+        对于文本框\密码框\日期选择框  value为用户输入或选择的是的内容
+        对于单选.多选框 value默认为on,需要手动设置value
+    readonly属性 只读,不允许修改,但是可以提交给服务器
+    placeholder属性 输入框提示信息
+
+post请求与get请求的区别
+1. 携带数据位置不同,get请求数据在URL后,post请求将数据放在http协议的请求中
+2. 携带数据类型不同,get只能携带文本,post可以携带任意类型
+3. 携带数据的大小不同,get只能携带少量数据,post无限制,但是服务器后台会限制post请求数据的大小
+4. 安全性 post请求安全性高于get请求
+-->
+<form action="https://www.baidu.com" method="post" enctype="application/x-www-form-urlencoded">
+    <!-- 输入类型为文本 -->
+    用户名:<input type="text" readonly/><br/>
+    <!-- 输入类型为密码 -->
+    密码:<input type="password" placeholder="密码长度应在6-12位"/><br/>
+
+    <!-- type为radio表示单选框,如果想要多个选项的效果.将多个单选框要设置相同的name即可  必须设置value -->
+    账号类型:<input type="radio" name="accounttype" value="学生"/> 学生
+    <input type="radio" name="sa" value="教师"/> 教师<br>
+
+    <!-- type为checkbox表示多选框,如果想要多个选项的效果.将多个单选框要设置相同的name即可  必须设置value  -->
+    兴趣爱好:<input type="checkbox" name="hobby" value="旅游"/>旅游
+    <input type="checkbox" name="hobby" value="书法"/>书法
+    <input type="checkbox" name="hobby" value="摄影"/>摄影<br/>
+
+    邮箱<input type="email" name="email"/><br/>
+    手机号:<input type="number" name="phone"/><br/>
+    出生日期:<input type="date" name="date"/><br/>
+    头像:<input type="file" name="icon"/><br/>
+
+    <!-- 下拉框 select 必须有name属性 -->
+    学历:<select name="edu">
+    <!-- 选项option  必须有value属性 -->
+    <!-- 默认选择第一个option,可以在option选项中添加selected属性改变默认选项 -->
+    <option value="初中">初中</option>
+    <option value="高中">高中</option>
+    <option value="本科" selected>本科</option>
+    <option value="硕士">硕士</option>
+    <option value="博士">博士</option>
+</select> <br/>
+
+    <!-- 文本域 textarea rows表示行,cols表示文本的列 必须要有name属性 -->
+    个人经历:<textarea rows="20" cols="50" name="comments"/></textarea><br/><br/><br/>
+
+    <!-- 提交 -->
+    <input type="submit" value="提交"/>
+
+    <!--
+    get请求
+        https://www.baidu.com/?accounttype=%E5%AD%A6%E7%94%9F&hobby=%E6%97%85%E6%B8%B8&email=afjag%40ajffa
+        .oa&phone=12847518125&date=2021-07-27&icon=2021714185830.bmp&edu=%E6%9C%AC%E7%A7%91&comments
+        =%E7%88%B1%E5%A5%BD%E7%BC%96%E7%A8%8B
+     -->
+
+    <!--
+    post请求
+        https://www.baidu.com/search/error.html
+        很抱歉，您要访问的页面不存在！
+    温馨提示 :
+
+    请检查您访问的网址是否正确
+
+    如果您不能确认访问的网址，请浏览百度更多页面查看更多网址。
+
+    回到顶部重新发起搜索
+
+    如有任何意见或建议，请及时反馈给我们。
+    -->
+</form>
+
+</body>
+</html>

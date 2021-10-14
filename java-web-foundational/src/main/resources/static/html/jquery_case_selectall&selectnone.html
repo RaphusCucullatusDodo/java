@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery实现复选框的全选与反选</title>
+    <script src="../js/jquery-3.6.0.js"></script>
+    <style>
+        table {
+            width: 720px;
+        }
+    </style>
+</head>
+<body>
+<h1>jQuery实现复选框的全选与反选</h1>
+<table>
+    <tr>
+        <input type="button" id="reverseAll" value="反选" onclick="reverseSelect()"/>
+
+    </tr>
+    <tr>
+        <td><input type="checkbox" id="selectAll" value="全选/全不选" onclick="selectAll(this)"/></td>
+        <td>分类ID</td>
+        <td>分类名称</td>
+        <td>分类描述</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" class="itemSelect"/></td>
+        <td>1</td>
+        <td>手机</td>
+        <td>智能手机</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" class="itemSelect"/></td>
+        <td>2</td>
+        <td>电脑</td>
+        <td>笔记本电脑</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" class="itemSelect"/></td>
+        <td>3</td>
+        <td>家居装饰</td>
+        <td>家具</td>
+    </tr>
+</table>
+
+<script>
+    /**
+     * 全选/全不选
+     * 当点击父checkbox后 设置子checkbox值与父checkbox的状态一样
+     *  @parm object
+     */
+    function selectAll(object) {
+        //设置子checkbox( class="itemSelect")值与父checkbox(object)的状态一样
+        $(".itemSelect").prop("checked", object.checked)
+    }
+
+
+    /**
+     *反选 给按钮绑定onClick事件 ,设置所有的子checkbox( class="itemSelect")值与当前的状态相反
+     */
+    function reverseSelect() {
+        $(".itemSelect").each(function (index, element) {
+            //element为js对象
+            element.checked = !element.checked
+        })
+    }
+
+    //class=itemSelect 的checkbox绑定onclick事件
+    //当所有 子checkbox( class="itemSelect")都选中时,父checkbox自动选中
+    $(".itemSelect").click(function () {
+        //判断子checkbox全部选中
+        let flag = true
+        //遍历所有子checkbox
+        $(".itemSelect").each(function (index, element) {
+            if (!element.checked) {
+                //如果有一个子checkbox的checked状态为false,则更改父checkbox的checked更改false
+                $("#selectAll").prop("checked", false)
+                //如果有一个子checkbox的checked状态为false未选中则更改flag
+                flag = false
+            }
+        })
+        //通过标记实现主checked
+        if (flag) {
+            $("#selectAll").prop("checked", true)
+        }
+    })
+    $("#reverseAll").click(function () {
+        //判断子checkbox全部选中
+        let flag = true
+        //遍历所有子checkbox
+        $(".itemSelect").each(function (index, element) {
+            if (!element.checked) {
+                //如果有一个子checkbox的checked状态为false,则更改父checkbox的checked更改false
+                $("#selectAll").prop("checked", false)
+                //如果有一个子checkbox的checked状态为false未选中则更改flag
+                flag = false
+            }
+        })
+        //通过标记实现主checked
+        if (flag) {
+            $("#selectAll").prop("checked", true)
+        }
+    })
+</script>
+</body>
+</html>

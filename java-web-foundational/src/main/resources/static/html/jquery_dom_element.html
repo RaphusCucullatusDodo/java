@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery创建 添加和移除标签</title>
+    <script src="../js/jquery-3.6.0.js"></script>
+</head>
+<body>
+
+<ul id="cities">
+    <li id="beijing">北京</li>
+    <li id="shanghai">上海</li>
+    <li id="guangzhou">广州</li>
+    <li id="shenzhen">深圳</li>
+</ul>
+<input type="button" value="添加城市" onclick="addCity()"><br/>
+<input type="button" value="删除城市" onclick="removeCity()"><br/>
+<input type="button" value="清空城市列表" onclick="clearCities()"><br/>
+
+
+<script>
+
+    function addCity() {
+        // 创建li标签
+        let $liElement = $("<li id='wuhan'>武汉</li>");
+        // 添加武汉
+        // 将指定子标签添加到调用父标签的最后
+        // $("#cities").append($liElement)
+        //将指定子标签添加到调用父标签的最前
+        // $("#cities").prepend($liElement)
+
+        // 将调用子标签添加到指定父标签的最后
+        // $liElement.appendTo($("#cities"))
+
+        //在深圳前面添加苏州
+        // $liElement = $("<li id='suzhou'>苏州</li>");
+        // $("#shenzhen").before($liElement)
+
+        //在深证后面添加南京
+        $liElement = $("<li id='nanjing'>南京</li>");
+        $("#shenzhen").after($liElement)
+    }
+
+    function removeCity() {
+        //删除调用该方法调用者
+        $("#shenzhen").remove()
+    }
+
+    function clearCities() {
+        //清空调用列表的子标签
+        $("#cities").empty()
+    }
+
+
+</script>
+</body>
+</html>

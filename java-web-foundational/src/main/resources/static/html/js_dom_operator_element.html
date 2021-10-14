@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript编程之DOM编程-操作元素</title>
+</head>
+<body>
+<!-- 准备数据 -->
+<ul id="cities">
+    <li id="beijing">
+        北京
+    </li>
+    <li id="shanghai">
+        上海
+    </li>
+    <li id="guangzhou">
+        广州
+    </li>
+    <li id="shenzhen">
+        深圳
+    </li>
+
+</ul>
+<input type="button" value="添加城市" onclick="addCity()"><br>
+<input type="button" value="删除城市" onclick="delCity('hangzhou')"><br>
+
+
+<script>
+
+    function delCity(cityId) {
+        let elementById = document.getElementById(cityId)
+        elementById.remove()
+    }
+
+    function addCity() {
+//    在列表中添加城市
+//    1 创建li标签
+        let htmlliElement = document.createElement("li");
+        htmlliElement.setAttribute("id", "hangzhou")
+        htmlliElement.innerText = "杭州"
+
+//    将il标签添加到ul标签中
+        document.getElementById("cities").append(htmlliElement)
+    }
+
+</script>
+</body>
+</html>

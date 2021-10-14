@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery选择器-层级选择器</title>
+    <script src="../js/jquery-3.6.0.js"></script>
+</head>
+<body>
+
+<input onclick="fn1()" type="button" value="改变<body>内所有<div>的背景为红色" id="b1"/>
+<input onclick="fn2()" type="button" value="改变<body>内子<div>的背景为红色" id="b2"/>
+<input onclick="fn3()" type="button" value="改变id为one的下一个<div>的背景为红色" id="b3"/>
+<input onclick="fn4()" type="button" value="改变id为two的元素后面所有兄弟<div>的背景为红色" id="b4"/>
+
+
+<!--
+基础选择器
+  console.log("根据element查找元素:"+$("h1").text())
+  console.log("根据id查找元素:"+$("#content").text())
+  console.log("根据class查找元素:"+$(".custom_style").text())
+后代选择器
+
+-->
+<script>
+    /**
+     * 改变<body>内所有<div>的背景为红色
+     */
+    function fn1() {
+        // 1.获取<body>内所有<div> 2.设置为红色  $("A B")查找A元素的子元素以及子子元素中的B元素,即内部的所有B元素
+        $("body div").css("background-color", "red")
+    }
+
+    /**
+     * 改变<body>内子<div>的背景为红色
+     */
+    function fn2() {
+        //    子选择器$("A>B")只包含A的子元素中的B元素,不包含子子元素
+        $("body>div").css("background-color", "red")
+    }
+
+    /**
+     * 改变id为one的下一个<div>的背景为红色
+     */
+    function fn3() {
+        //兄弟选择器$("A+B")获取与A元素同级的下一个B元素
+        $("#one+div").css("background-color", "red")
+    }
+
+    /**
+     * 改变id为two的元素后面所有兄弟<div>的背景为红色
+     */
+    function fn4() {
+        //        兄弟选择器$("A~B")获取与A元素同级的所有B元素
+        $("#two~div").css("background-color", "red")
+    }
+</script>
+</body>
+</html>

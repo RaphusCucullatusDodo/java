@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery实现动画的淡入淡出效果</title>
+    <script src="../js/jquery-3.6.0.js"></script>
+</head>
+<body>
+<h1>jQuery实现动画的淡入淡出效果</h1>
+
+<div id="basic">
+    <img src="../images/57dd81498c9031f7(1).jpg"/><br>
+    <input type="button" value="以淡出的效果的方式隐藏图片" onclick="fadeInImage()"/>
+    <input type="button" value="以淡入的效果的方式显示图片" onclick="fadeOutImage()"/>
+    <input type="button" value="以淡入淡出的方式显示和隐藏图片" onclick="fadeToggleImage()"/>
+
+
+</div>
+<script>
+    /**
+     *以淡出的效果的方式隐藏图片
+     */
+    function fadeInImage() {
+        //jQuery对象.hide(动画执行速度,执行结束之后调用的函数)
+        $("img").fadeOut(3000, function () {
+            alert("以淡出的效果的方式隐藏图片")
+        })
+    }
+
+    /**
+     *以淡入的效果的方式显示图片
+     */
+    function fadeOutImage() {
+        //jQuery对象.show(动画执行速度,执行结束之后调用的函数)
+        $("img").fadeIn(3000, function () {
+            alert("以淡入的效果的方式显示图片")
+        })
+    }
+
+    /**
+     * 以淡入淡出效果的方式隐藏和显示图片
+     */
+    function fadeToggleImage() {
+        //jQuery对象.toggle(动画执行速度,执行结束之后调用的函数)
+        $("img").fadeToggle(3000)
+    }
+</script>
+</body>
+</html>

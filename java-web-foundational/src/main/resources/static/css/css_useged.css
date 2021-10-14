@@ -1,0 +1,13 @@
+/*定义外部样式*/
+
+span {
+    color: -moz-mac-menuselect;
+    font-size: 64px;
+    font: -apple-system-short-subheadline;
+}
+
+div {
+    color: darkmagenta;
+    font-size: 64px;
+    font: -apple-system-short-subheadline;
+}

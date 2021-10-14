@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue+Axios改造修改账号</title>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/axios.js"></script>
+    <script src="../../js/getParameter.js"></script>
+
+</head>
+<body>
+<h1>Vue+Axios改造修改账号</h1>
+
+<div id="app">
+    <div style="color: red" v-html="errorMessage"></div>
+    <!--
+    onsubmit="return false 禁用表单的同步提交
+    -->
+    <form action="account" method="post" onsubmit="return false">
+        账户名:<input type="text" name="name" v-model="account.name"/><br/>
+        账户余额:<input type="text" name="balance" v-model="account.balance"/><br/>
+        账号状态:
+        <input type="radio" name="status" value="1" v-model="account.status"/>启用
+        <input type="radio" name="status" value="0" v-model="account.status"/>禁用<br/>
+
+        <input type="submit" value="提交" @click="axiosUpdateAccount()"/>
+    </form>
+
+
+</div>
+
+<script>
+    let id = getPatemeter("id");
+    new Vue({
+        el: "#app",
+        data: {
+            account: {},
+            errorMessage: ""
+        },
+        methods: {
+            axiosToAccountUpdatePage() {
+                axios.post("../../async/account?method=toAccountUpdatePage&id=" + id).then(response => {
+                        if (response.data.flag) {
+                            this.account = response.data.data
+                        } else {
+                            //alert("回显数据失败")
+                            this.errorMessage = response.data.errorMessage
+                        }
+                    }
+                )
+            },
+            axiosUpdateAccount() {
+                axios.post("../../async/account?method=accountUpdate", this.account).then(response => {
+                    //修改账号成功
+                    if (response.data.flag) {
+                        //跳转到列表页面
+                        location.href = "vue+axios_account_list.html"
+                    } else {
+                        this.errorMessage = "修改账号失败"
+                    }
+                }).catch(error => {
+                    console.log("服务器异常:" + error)
+                    this.errorMessage = "服务器异常"
+                })
+            }
+        },
+        created() {
+            this.axiosToAccountUpdatePage()
+        }
+
+    })
+
+
+</script>
+</body>
+</html>

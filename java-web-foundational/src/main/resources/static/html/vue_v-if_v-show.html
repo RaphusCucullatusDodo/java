@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue绑定标签的显示和隐藏</title>
+    <script src="../js/vue.js"></script>
+
+</head>
+<body>
+<h1>Vue绑定标签的显示和隐藏</h1>
+
+<div id="app">
+    <!--
+      v-if取值是true的时候显示图片
+      v-if取值是false的时候隐藏图片(本质就是删除了img标签)
+     -->
+    <!--    <img src="../images/ad.jfif" v-if="isShow">-->
+    <!--
+    v-show取值是true的时候显示图片
+    v-show取值是false的时候隐藏图片(本质就是添加样式 style="display:none" 来隐藏图片)
+   -->
+    <img src="../images/ad.jfif" v-show="isShow">
+
+</div>
+
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            isShow: false
+
+
+        }
+    })
+</script>
+</body>
+</html>

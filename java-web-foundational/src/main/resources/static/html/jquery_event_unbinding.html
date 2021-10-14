@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery绑定事件</title>
+    <script src="../js/jquery-3.6.0.js"></script>
+
+</head>
+<body>
+<h1>jQuery绑定事件</h1>
+<input type="button" value="按钮" id="btn" onclick="handleOnclick()"><br/>
+
+<script>
+    //jquery绑定事件onblur
+    $("#btn").click(function () {
+        alert("jquery的匿名函数绑定onclick事件 按钮被点击了")
+    })
+    document.getElementById("btn").onclick = function () {
+        alert("js匿名函数方式绑定onBlur 失去焦点")
+    }
+    //jquery绑定事件onblur
+    //off方法用于解绑指定事件,如果没有参数,则解绑该元素的所有jQuery事件(不能解绑js)
+    // $("#btn").off("click")
+    $("#btn").off()
+
+</script>
+</body>
+</html>

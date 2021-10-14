@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自动补全</title>
+
+    <style>
+        #wordsListDiv {
+            display: none;
+        }
+
+        #wordsListTable {
+            width: 505px;
+            border: 1px solid;
+            height: 300px;
+            position: absolute;
+            left: 515px;
+        }
+    </style>
+    <script src="../js/jquery-3.6.0.js"></script>
+
+</head>
+<body>
+<center>
+    <h1>百度一下,你就知道</h1>
+
+    <div id="errorMessage" STYLE="color: red"></div>
+
+    <div>
+        <input type="text" style="width:500px;height: 40px" onkeyup="searchWords(this.value)"/>
+    </div>
+
+    <div id="wordsListDiv">
+        <table id="wordsListTable">
+
+        </table>
+    </div>
+</center>
+
+<script>
+    /**
+     * 异步请求搜索自动补全
+     * @param keyword
+     */
+    function searchWords(keyword) {
+        //输入框为非空字符串,表示用户数输入了数据
+        if (keyword != "") {
+            // 展示表格所在div显示在页面上
+            $("#wordsListDiv").show();
+            // $.post("请求地址","post参数",function(result){}) result默认为text(普通文本字符串)
+            $.post("../words", "method=search&keyword=" + keyword, function (result) {
+                //服务器没有异常
+                if (result.flag) {
+                    //遍历前先清空表格已有数据
+                    $("#wordsListTable").empty();
+
+                    //获取wordsList
+                    let wordsList = result.data;
+
+                    //遍历wordsList
+                    $.each(wordsList, function (index, words) {
+                        let word = words.word;
+                        //将每个word都添加到表格中
+                        $("#wordsListTable").append("<tr><td>" + word + "</td></tr>")
+                    })
+
+                } else {
+                    $("#errorMessage").html("服务器异常")
+                }
+            }, "json")
+        } else {
+            //输入框的内容为空则隐藏自动补全表格
+            $("#wordsListDiv").hidden;
+
+        }
+    }
+</script>
+</body>
+</html>

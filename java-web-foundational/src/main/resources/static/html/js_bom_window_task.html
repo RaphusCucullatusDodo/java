@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript编程之BOM编程-window对象-定时</title>
+</head>
+<body>
+
+<script>
+    //window对象实现两种定时器
+
+    //只执行一次
+    //两秒后在页面上打印helloworld
+    window.setTimeout(function () {
+        document.write("helloworld<br>")
+    }, 500)
+
+    //执行多次
+    // 每间隔两秒 在页面上打印helloworld
+    let count = 0;
+    window.setInterval(function () {
+        //设置执行次数
+        document.write(" hello world<br>")
+        count++
+        if (count == 8) {
+            window.clearInterval()
+        }
+    }, 1000)
+
+</script>
+</body>
+</html>

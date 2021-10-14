@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery选择器-表单属性过滤选择器的使用</title>
+    <script src="../js/jquery-3.6.0.js"></script>
+</head>
+<body>
+<h1>jQuery选择器-表单属性过滤选择器的使用</h1>
+<input type="button" onclick="fn1()" value="设置可用文本框的背景色为红色" id="b1"/>
+<input type="button" onclick="fn2()" value="设置不可用文本框的背景色为红色" id="b2"/>
+<input type="button" onclick="fn3()" value="获取选中的多选框的个数" id="b3"/>
+<input type="button" onclick="fn4()" value="获取所有选中的下拉框的个数" id="b4"/>
+<br/><br/>
+<input type="checkbox" name="raphus" value="公务员">公务员
+<input type="checkbox" name="raphus" value="IT">IT
+<input type="checkbox" name="raphus" value="管理">管理
+<br/><br/>
+<select name="job" id="job" multiple="mutiple" size="4">
+    <option>程序员</option>
+    <option>程序员</option>
+    <option>程序员</option>
+    <option>程序员</option>
+</select>
+<br/><br/>
+<select name="edu" id="edu">
+    <option>本科</option>
+    <option>硕士</option>
+    <option>博士</option>
+    <option>本科</option>
+
+</select>
+
+<script>
+    /**
+     * 设置可用文本框的背景色为红色
+     */
+    function fn1() {
+        $(":text:enabled").css("background-color", "red")
+    }
+
+    /**
+     * 设置不可用文本框的背景色为红色
+     */
+    function fn2() {
+        $(":text:disabled").css("background-color", "red")
+    }
+
+    /**
+     * 获取选中的多选框的个数
+     */
+    function fn3() {
+        let checkBoxCheckedLength = $(":checkbox:checked").length;
+        alert("多选框选中的个数为" + checkBoxCheckedLength)
+    }
+
+    /**
+     * 获取所有选中的下拉框的个数
+     */
+    function fn4() {
+        let selectSelectedLength = $(":selected").length;
+        alert("下拉框选中的个数为" + selectSelectedLength)
+    }
+
+</script>
+</body>
+</html>

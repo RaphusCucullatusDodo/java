@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>使用原生JS发送异步请求</title>
+</head>
+<body>
+<h1>使用原生JS发送异步请求</h1>
+<div style="color: red" id="responseText"></div>
+<a href="../handle?name=raphuscucullatus">同步请求</a><br/>
+<a href="#" onclick="sendGetRequest()">使用原生JS发送get异步请求</a><br/>
+<a href="#" onclick="sendPostRequest()">使用原生JS发送post异步请求</a><br/>
+<script>
+    function sendGetRequest() {
+        //创建XmlHttpRequest对象
+        let xhr = new XMLHttpRequest();
+        //与服务器建立连接
+        xhr.open("GET", "../handle?name=raphuscucullatus")
+        //发送get异步请求
+        xhr.send()
+
+        // 处理get响应数据
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+            }
+            //获取响应数据
+            let responseText = xhr.responseText;
+            document.getElementById("responseText").innerText = responseText
+        }
+    }
+
+    function sendPostRequest() {
+        //创建XmlHttpRequest对象
+        let xhr = new XMLHttpRequest();
+        //与服务器建立连接
+        xhr.open("POST", "../handle")
+        //设置请求头参数类型
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+        //发送post异步请求
+        xhr.send("name=raphuscucullatus")
+
+        // 处理post响应数据
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+            }
+            //获取响应数据
+            let responseText = xhr.responseText;
+            document.getElementById("responseText").innerText = responseText
+        }
+
+    }
+</script>
+</body>
+</html>

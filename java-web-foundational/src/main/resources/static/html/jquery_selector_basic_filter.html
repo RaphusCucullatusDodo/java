@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jquery选择器-基本过滤器的使用</title>
+    <script src="../js/jquery-3.6.0.js"></script>
+    <style>
+        teble {
+            width: 1200px;
+            txet-align: left;
+        }
+    </style>
+</head>
+<body>
+<h1>jquery选择器-基本过滤器的使用</h1>
+<table>
+    <tr>
+        <td>分类ID</td>
+        <td>分类名称</td>
+        <td>分类描述</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>手机</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>电脑</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>家居装饰</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>鞋靴箱包</td>
+        <td></td>
+    </tr>
+</table>
+
+<script>
+    //表格第一行背景颜色设置为红色
+    $("tr:first").css("background", "red")
+    //表格最后一行背景颜色设置为蓝色
+    $("tr:last").css("background", "blue")
+
+    //表格索引(从零开始)奇数行背景颜色设置为绿色
+    $("tr:odd").css("background", "green")
+
+    //表格索引(从零开始)偶数行背景颜色设置为黄色
+    $("tr:even").css("background", "yellow")
+
+    //表格索引为2那一行背景颜色设置为粉红色
+    $("tr:eq(2)").css("background", "pink")
+
+    //表格索引小于3的行背景颜色设置为灰色
+    $("tr:lt(3)").css("background", "gray")
+
+    //表格索引大于3的行背景颜色设置为#ffc888
+    $("tr:lt(3)").css("background", "#ffc888")
+
+
+</script>
+</body>
+</html>

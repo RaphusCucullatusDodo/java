@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+    #{}表示占位符,作用同JDBC中的?占位符
+    如果方法的参数是简单类型,例如 Long Integer String ,那么#{}内的值可以任意值,
+    但是为了可读性,应与方法参数名保持一致
+-->
+<mapper namespace="cn.raphuscucullatus.java.web.foundational.mapper.AccountMapper">
+    <!--
+      使用sql标签抽取可复用的sql语句
+      在需要使用的地方使用include标签引入即可
+    -->
+    <sql id="select_all">
+        select id, name, balance, status, create_date, update_date, user_id
+        from jdbc_account
+    </sql>
+    <select id="selectById" resultType="Account" parameterType="long">
+        <include refid="select_all"/>
+        where id = #{id}
+    </select>
+    <!--
+        #{}表示占位符,作用同JDBC中的?占位符
+        如果方法的参数是简单类型,例如 Long Integer String ,那么#{}内的值可以任意值,但是为了可读性,应与方法参数名保持一致.
+        如果方法的参数是复杂类型,例如POJO,那么他的在#{}填的值由他的属性名决定
+        selectKey 用于获取新增数据的主键
+        keyColumn 查询列名
+        keyProperty pojo属性名
+        resultType 查询结果类型
+        last_insert_id() MySQL的一个函数,用于查询id列中最后一个自增id的值
+    -->
+    <insert id="insert" parameterType="Account">
+        <selectKey resultType="long" order="AFTER" keyProperty="id" keyColumn="id">
+            select last_insert_id()
+        </selectKey>
+        insert into jdbc_account values (null,#{name},#{balance},#{status},now(),now(),#{userId})
+    </insert>
+
+    <update id="update" parameterType="Account">
+        update jdbc_account
+        set name = #{name},
+        balance=#{balance},
+        status=#{status},
+        update_date=now()
+        where id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="Long">
+        delete
+        from jdbc_account
+        where id = #{id}
+    </delete>
+
+    <select id="selectAccountByPage" resultType="Account" parameterType="map">
+        <include refid="select_all"/>
+        <where>
+            <if test="status!=null">
+                and status = #{status}
+            </if>
+        </where>
+        limit #{startIndex},#{pageSize}
+    </select>
+    <select id="selectAccountByQueryVO" resultType="Account"
+            parameterType="cn.raphuscucullatus.java.web.foundational.bean.vo.QueryVO">
+        <include refid="select_all"/>
+        <where>
+            <if test="condition.status!=null">
+                and status = #{condition.status}
+            </if>
+        </where>
+        limit #{offSet},#{pageSize}
+    </select>
+
+    <select id="selectAccountListByStatus" parameterType="integer" resultType="Account">
+        <include refid="select_all"/>
+        <if test="status!=null">
+            where status = #{status}
+        </if>
+    </select>
+
+    <select id="selectAccountListByStatusAndName" parameterType="Account" resultType="Account">
+        <include refid="select_all"/>
+        <where>
+            <if test="status!=null">
+                and status = #{status}
+            </if>
+            <if test="name!=null">
+                and name = #{name}
+            </if>
+        </where>
+    </select>
+
+    <!--
+    使用foreach标签遍历集合,将遍历出来的数据存入()中,
+    collection属性 表示要遍历的集合,如果要遍历的是List集合那么值为list,是Map那么值为map,数组那么值为array
+    item(项)属性 表示遍历出的元素
+    separator(分隔符)属性 表示遍历出来的每个元素的分隔符
+    open属性 表示集合遍历出来的第一个元素之前拼接字符串
+    close属性 表示在集合遍历出来的最后一个元素之后拼接字符串
+    -->
+    <!--      int deleteByIds (List<Long> ids);  -->
+    <!--        <delete id="deleteByIds" parameterType="long">-->
+    <!--            delete from jdbc_account-->
+    <!--            <if test="ids!=null and ids.size()>0">-->
+    <!--                where and id in(-->
+    <!--                <foreach collection="list" item="id" separator=",">-->
+    <!--                    #{id}-->
+    <!--                </foreach>-->
+    <!--                )-->
+    <!--            </if>-->
+    <!--        </delete>-->
+
+    <!--  int deleteByIds (Long... ids);  -->
+    <delete id="deleteByIds" parameterType="long[]">
+
+        <if test="ids!=null and ids.length>0">
+            delete from jdbc_account where id in(
+            <foreach collection="ids" item="id" separator=",">
+                #{id}
+            </foreach>
+            )
+
+        </if>
+    </delete>
+
+    <!--
+       如果是一对一
+        autoMapping 属性名与字段名一样的,进行自动映射 可以配置
+    -->
+    <resultMap id="accountUserInfoResultMap" type="Account" autoMapping="true">
+        <id property="id" column="accountId"></id>
+        <result property="name" column="accountName"></result>
+        <!--        <result property="balance" column="balance"></result>-->
+        <!--        <result property="status" column="status"></result>-->
+        <result property="createDate" column="accountCreateDate"></result>
+        <result property="updateDate" column="accountUpdateDate"></result>
+        <!--
+                association 一对一 一个账号只属于一个用户
+                用于配置一对一关系时 从表所属的主表
+        -->
+        <association property="user" javaType="User" autoMapping="true">
+            <!--            <id property="id" column="id"></id>-->
+            <!--            <result property="name" column="name"></result>-->
+            <!--            <result property="password" column="password"></result>-->
+            <!--            <result property="createDate" column="create_date"></result>-->
+            <!--            <result property="updateDate" column="update_date"></result>-->
+        </association>
+    </resultMap>
+    <select id="selectAccountUserInfo" parameterType="long" resultMap="accountUserInfoResultMap">
+        select account.id as accountId,
+        account.`name` as accountName,
+        account.balance,
+        account.`status`,
+        account.create_date as accountCreateDate,
+        account.update_date as accountUpdateDate,
+        user.id,
+        user.name,
+        user.`password`,
+        user.create_date,
+        user.update_date
+        from jdbc_account account,
+        jdbc_user user
+        where account.user_id = user.id
+        and account.id = #{accountId}
+    </select>
+
+    <resultMap id="AccountUserInfoMapLazyLoad" type="Account" autoMapping="true">
+        <!--
+                association
+                property="user" 用于接收二次查询的结果
+                column="user_id" 表示第一次查询结果中user_id的值列作为第二次查询的参数
+                select表示第二次执行的查询
+                fetchType="lazy" 表示使用懒加载(只对当前查询生效,全局懒加载)
+        -->
+        <association property="user"
+                     select="cn.raphuscucullatus.java.web.foundational.mapper.UserMapper.selectById"
+                     column="user_id"
+                     autoMapping="true"
+        >
+        </association>
+    </resultMap>
+    <select id="selectAccountUserInfoLazyLoad" parameterType="long" resultMap="AccountUserInfoMapLazyLoad">
+        <include refid="select_all"/>
+        where id = #{id}
+    </select>
+
+    <!--    <select id="selectAccountListByUserId" parameterType="long" resultType="Account" >-->
+    <!--        <include refid="select_all"/>-->
+    <!--        where user_id = #{userId}-->
+    <!--    </select>-->
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+每个映射配置文件对应一个Mapper接口
+mapper是映射配置文件的根标签
+namespace属性就是Mapper接口(UserMapper)的全限定名
+-->
+<mapper namespace="cn.raphuscucullatus.java.web.foundational.mapper.UserMapper">
+    <cache/>
+    <!--
+    手动指定映射规则,也就是结果集和POJO的属性的映射关系
+    ORM(Object Relation Mapping)
+    -->
+    <resultMap id="userInfoMap" type="UserInfo">
+        <!--    id表示配置数据库的主键    -->
+        <id column="id" property="userId"></id>
+        <!--    result表示配置数据库其他列名    -->
+        <result column="name" property="userName"></result>
+        <result column="password" property="userPassword"></result>
+        <result column="create_date" property="userCreateDate"></result>
+        <result column="update_date" property="userUpdateDate"></result>
+    </resultMap>
+    <!--
+    如果是数据库的查询操作就要配置select子标签
+     id的值就是Mapper接口的方法名
+     resultType就是对应的封装的结果类型(相当于resultSet),如果封装的结果类型是List<User>,则配置为resultType="User"
+      resultType="User"是经过mybatis配置过的别名,对应的类是cn.raphuscucullatus.java.web.foundational.mapper.UserMapper.User
+     标签体就是要执行的SQL语句.
+
+    -->
+    <select id="selectAll" resultType="User">
+        select id, name, password, create_date, update_date
+        from jdbc_user
+        where 1 = 1
+    </select>
+
+    <select id="findUserByUserNamePassword" resultType="User">
+        select id, name, password, create_date, update_date
+        from jdbc_user
+        where name = #{name}
+        and password = #{pwd}
+    </select>
+
+    <!--
+    resultType 可以写全名也可以写别名
+    -->
+    <select id="UserTotalCount" resultType="java.lang.Long">
+        select count(*)
+        from jdbc_user
+    </select>
+
+    <select id="selectUserInfoById" parameterType="Long" resultMap="userInfoMap">
+        select id, name, password, create_date, update_date
+        from jdbc_user
+        where id = #{id}
+    </select>
+
+    <select id="selectByName" parameterType="string" resultType="map">
+        select id, name, password, create_date, update_date
+        from jdbc_user
+        where name = #{name}
+    </select>
+
+    <delete id="deleteById" parameterType="long">
+        delete
+        from jdbc_user
+        where id = #{id}
+    </delete>
+
+    <resultMap id="userAccountListResultMap" type="User" autoMapping="true">
+        <!--        <id property="id" column="userId"></id>-->
+        <result property="name" column="userName"></result>
+        <!--        <result property="password" column="password"></result>-->
+        <!--        <result property="createDate" column="userCreateDate"></result>-->
+        <!--        <result property="updateDate" column="userUpdateDate"></result>-->
+        <!--
+                collection 一对多映射 一个用户拥有多个账号
+                用于配置一对多关系中的 从表
+        -->
+        <collection property="accountList" ofType="Account" autoMapping="true">
+            <!--            <id column="id" property="id"></id>-->
+            <!--            <result column="name" property="name"></result>-->
+            <!--            <result column="balance" property="balance"></result>-->
+            <!--            <result column="status" property="status"></result>-->
+            <!--            <result column="create_date" property="createDate"></result>-->
+            <!--            <result column="update_date" property="updateDate"></result>-->
+        </collection>
+    </resultMap>
+    <select id="selectUserAccountList" parameterType="long" resultMap="userAccountListResultMap">
+        SELECT user.id as userId,
+        user.name as userName,
+        user.`password`,
+        user.create_date as userCreateDate,
+        user.update_date as userUpdateDate,
+        account.id,
+        account.`name`,
+        account.balance,
+        account.`status`,
+        account.create_date,
+        account.update_date
+        FROM jdbc_user user,
+        jdbc_account account
+        WHERE user.id = account.user_id
+        AND user.id = #{userId}
+    </select>
+    <!-- name的唯一区别是添加了与account表的name的外键 -->
+    <resultMap id="userRoleListResultMap" type="User" autoMapping="true">
+        <!--        <id property="id" column="id"></id>-->
+        <result property="name" column="name"></result>
+        <!--        <result property="password" column="password"></result>-->
+        <!--        <result property="updateDate" column="update_date"></result>-->
+        <!--        <result property="createDate" column="create_date"></result>-->
+        <collection property="roleList" ofType="Role" autoMapping="true">
+            <!--            <id property="roleId" column="role_id"></id>-->
+            <!--            <result property="roleDesc" column="role_name"></result>-->
+            <!--            <result property="roleName" column="role_desc"></result>-->
+        </collection>
+    </resultMap>
+    <select id="selectUserRoleList" parameterType="long" resultMap="userRoleListResultMap">
+        select user.id, user.name, role.role_id, role.role_name, role.role_desc
+        from jdbc_user user,
+        jdbc_user_role userRole,
+        jdbc_role role
+        where user.id = userRole.user_id
+        and role.role_id = userRole.role_id
+        and user.id = #{userId}
+    </select>
+
+    <select id="selectById" parameterType="long" resultType="User">
+        select user.id, user.name, user.password, user.create_date, user.update_date
+        from jdbc_user user
+        where user.id = #{userId}
+    </select>
+
+    <!--
+            二次查询参数: column="id"
+            二次查询返回结果: ofType="Account"
+            接收二次查询结果的POJO属性: property="accountList"
+            二次查询执行的查询: select="cn.raphuscucullatus.java.web.foundational.mapper.AccountMapper.selectAccountListByUserId"
+    -->
+    <!--    <resultMap id="userAccountListResultMapLazyLoad" type="User" autoMapping="true">-->
+    <!--        <id property="id" column="id"></id>-->
+    <!--        <collection column="id"-->
+    <!--                    ofType="Account"-->
+    <!--                    property="accountList"-->
+    <!--                    select="cn.raphuscucullatus.java.web.foundational.mapper.AccountMapper.selectAccountListByUserId"-->
+    <!--                    autoMapping="true"-->
+    <!--        >-->
+    <!--        </collection>-->
+    <!--    </resultMap>-->
+    <!--    <select id="selectUserAccountListLazyLoad" parameterType="long" resultMap="userAccountListResultMapLazyLoad">-->
+    <!--        select user.id, user.name, user.password, user.create_date, user.update_date-->
+    <!--        from jdbc_user user-->
+    <!--        where user.id = #{userId}-->
+    <!--    </select>-->
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

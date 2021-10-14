@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery绑定事件</title>
+    <script src="../js/jquery-3.6.0.js"></script>
+</head>
+<body>
+<input type="button" value="按钮" id="btn" onclick="handleOnclick()"><br/>
+<input type="text" id="name" onblur="handleOnblur()">
+
+<script>
+    //四种方绑定事件
+
+    //js普通函数绑定事件onclick
+    function handleOnclick() {
+        alert("按钮被点击了")
+    }
+
+    //js匿名函数绑定事件onclick
+    document.getElementById("btn").onclick = function () {
+        alert("js匿名函数方式绑定事件onclick 按钮被点击了")
+    }
+    //jquery绑定onclick
+    $("#btn").click(function () {
+        alert("jquery匿名函数方式绑定事件onclick 按钮被点击了")
+    })
+    //
+    $("#btn").on("click", function () {
+        alert("jquery使用on方法方式绑定事件onclick 按钮被点击了")
+    })
+
+    //js绑定事件onblur
+    function handleOnblur() {
+        console.log("js普通函数绑定onBlur 失去焦点")
+    }
+
+    document.getElementById("name").onblur = function () {
+        console.log("js匿名函数方式绑定onBlur 失去焦点")
+    }
+    //jquery绑定事件onblur
+    $("#name").blur(function () {
+        console.log("jquery匿名函数方式绑定Blur 失去焦点")
+    })
+    $("#name").on("blur", function () {
+        console.log("jquery使用on方法方式绑定事件Blur 失去焦点")
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript编程之基本语法-流程控制</title>
+</head>
+<body>
+
+<script>
+    //九九乘法表
+    document.write("<h1>九九乘法表</h1>")
+    document.write("<table cellspacing='0' width='800px'>")
+    for (let i = 1; i <= 9; i++) {
+        document.write("<tr>")
+        for (let j = 1; j <= i; j++) {
+            document.write("<td>" + j + "*" + i + "=" + (i * j) + "<td>")
+        }
+        document.write("<tr>")
+    }
+    document.write("<table>")
+
+</script>
+</body>
+</html>

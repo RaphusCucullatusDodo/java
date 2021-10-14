@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSON的使用</title>
+</head>
+<body>
+
+
+<script>
+    //{key:value,key:value}
+    let orderInfo = {
+        "orderId": 1000000
+        , "orderNo": "TB100000"
+        , "address": {"province": "广东省", "city": "深圳市", "country": "罗湖区"}
+        , "products": [{"productName": "iPhone12", "price": 70000}, {"productName": "iPhone12", "price": 7000}]
+    }
+    // JSON数据访问
+    console.log("获取订单的订单id:" + orderInfo.orderId)
+    console.log("获取订单的订单编号:" + orderInfo.orderNo)
+    console.log("获取订单的地址(省):" + orderInfo.address.province)
+    console.log("获取订单的地址(市):" + orderInfo.address.city)
+    console.log("获取订单的地址(县):" + orderInfo.address.country)
+    console.log("获取订单的产品名称:" + orderInfo.products[0].productName)
+    console.log("获取订单的产品价格:" + orderInfo.products[0].price)
+
+
+</script>
+</body>
+</html>

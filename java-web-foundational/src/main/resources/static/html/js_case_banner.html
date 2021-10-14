@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript编程之综合案例-轮播图</title>
+</head>
+<body>
+<h1>JavaScript编程之综合案例-表单校验</h1>
+<img src="../images/1ef03bceb4e76206.png" id="phoneImage" onmouseover="pause()" onmouseout="startChangeImg()"/>
+<script>
+    //是用数组保存轮播图片
+    let phoneImageUrlArray = ["../images/1ef03bceb4e76206.png"
+        , "../images/57dd81498c9031f7(1).jpg", "../images/88ea3ee6de9a9e11.jpg"]
+    let i = 0;
+    //开始轮播
+    let interval
+    //调用 startChangeImg() 给interval初始化
+    startChangeImg()
+
+    /**
+     * 鼠标放在图片上则清除定时器interval，实现暂停轮播
+     */
+    function pause() {
+        window.clearInterval(interval)
+    }
+
+    /**
+     * 鼠标移开后添加定时器,实现继续轮播
+     */
+    function startChangeImg() {
+        interval = window.setInterval(function () {
+            i++;
+            if (i == 3) {
+                i = 0
+            }
+            document.getElementById("phoneImage").setAttribute("src", phoneImageUrlArray[i])
+        }, 2000);
+    }
+
+</script>
+</body>
+</html>

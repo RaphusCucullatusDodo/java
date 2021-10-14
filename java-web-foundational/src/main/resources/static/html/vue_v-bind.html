@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue绑定标签的属性</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<h1>Vue绑定标签的属性</h1>
+<div id="app">
+    <a v-bind:href="url">京东商城</a>
+    <a v-bind:href="taoBaoUrl+'?id='+id">跳转到淘宝,并携带参数id</a>
+
+</div>
+
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            url: "https://jd.com",
+            taoBaoUrl: "https://taobao.com",
+            id: 8
+
+        }
+    })
+</script>
+</body>
+</html>

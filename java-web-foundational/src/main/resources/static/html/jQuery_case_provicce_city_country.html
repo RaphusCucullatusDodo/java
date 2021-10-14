@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery实现省市县三级级联</title>
+    <script src="../js/jquery-3.6.0.js"></script>
+</head>
+<body>
+<h1>jQuery实现省市县三级级联</h1>
+<div>
+    <select id="provinceSelect" onchange="getCities(this.value)">
+        <option value="0" selected>请选择省份</option>
+    </select>
+    <select id="citySelect" onchange="getCountries(this.value)">
+        <option value="0" selected>请选择城市</option>
+    </select>
+    <select id="countrySelect">
+        <option value="0" selected>请选择区县</option>
+    </select>
+</div>
+<script>
+    let provinces;
+    let cities;
+    let countries;
+
+    /**
+     * 初始化省市区数据
+     */
+    function initDate() {
+        //创建对象
+        let beijingProvince = new Object();
+        //设置省id 省名称
+        beijingProvince.provinceId = 1
+        beijingProvince.provinceName = "北京"
+
+        console.log(beijingProvince)
+        let beijingCity = new Object()
+        //设置市id 市名称
+        beijingCity.provinceId = 1
+        beijingCity.cityId = 2
+        beijingCity.cityName = "北京"
+
+        console.log(beijingCity)
+        let chaoYang = new Object()
+        //设置区id 区名称
+        chaoYang.provinceId = 1
+        chaoYang.cityId = 2
+        chaoYang.countryId = 1
+        chaoYang.countryName = "朝阳区"
+
+        console.log(chaoYang)
+
+        //创建对象
+        let beijing1Province = new Object();
+        //设置省id 省名称
+        beijing1Province.provinceId = 3
+        beijing1Province.provinceName = "上海"
+        let beijing1City = new Object()
+
+        //设置市id 省名称
+        beijing1City.provinceId = 3
+        beijing1City.cityId = 1
+        beijing1City.cityName = "上海"
+        let chaoYang1 = new Object()
+
+        //设置区id 省名称
+        chaoYang1.provinceId = 3
+        chaoYang1.cityId = 1
+        chaoYang1.countryId = 1
+        chaoYang1.countryName = "黄埔"
+
+        provinces = [beijingProvince, beijing1Province]
+        cities = [beijingCity, beijing1City]
+        countries = [chaoYang, chaoYang1]
+
+
+        // console.log("省id:" + provinces[0].provinceId);
+        // console.log("省name:" + provinces[0].provinceName);
+        // console.log("市:" + cities[0]);
+        // console.log("区县:" + countries[0]);
+
+    }
+
+    $(function () {
+        initDate();
+        //遍历省份
+        $.each(provinces, function (i, province) {
+            //创建option
+            // 追加到省列表的下拉框
+            let $provinceOptionElement = $("<option value=" + province.provinceId + ">" + province.provinceName + "</option>");
+            $("#provinceSelect").append($provinceOptionElement)
+        })
+    })
+
+    //根据省份id添加城市
+    function getCities(provinceId) {
+        //添加城市前先清空之前添加的数据
+        $("#citySelect").html("<option value=\"0\" selected>请选择城市</option>")
+
+        $.each(cities, function (index, city) {
+            if (provinceId == city.provinceId) {
+                //创建option标签
+                // 追加到城市列表的下拉框
+                let $cityOptionElement = $("<option value=" + city.cityId + ">" + city.cityName + "</option>");
+                $("#citySelect").append($cityOptionElement)
+            }
+        })
+    }
+
+    /**
+     * 根据省份id和城市id获取区县
+     */
+    function getCountries(cityId) {
+        //获取当前省份列表下拉框选中省份的id
+        let provinceId = $("#provinceSelect").val();
+        $("#countrySelect").html("<option value='0' selected>请选择区县</option>")
+        //遍历所有区县
+        $.each(countries, function (index, country) {
+            //筛选出需要添加的区县
+            if (country.provinceId == provinceId && country.cityId == cityId) {
+                //  创建区县option 并添加到countrySelect下拉框
+                let $countryOptionElement = $("<option value=" + country.countryId + ">" + country.countryName + "</option>");
+                $("#countrySelect").append($countryOptionElement)
+            }
+        })
+    }
+
+
+</script>
+
+</body>
+</html>

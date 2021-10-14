@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--核心配置文件跟标签-->
+<configuration>
+    <!--
+        加载类路径下的jdbc.properties文件
+    -->
+    <properties resource="jdbc.properties"></properties>
+
+    <settings>
+        <!--    驼峰命名    -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--    开启二级缓存    -->
+        <setting name="cacheEnabled" value="true"/>
+        <!--    全局延迟加载    -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+
+
+    <typeAliases>
+        <!--
+                <typeAlias type="cn.raphuscucullatus.java.web.foundational.bean.entity.User" alias="user"></typeAlias>
+        -->
+        <!--
+            给指定的包下所有的类取别名(省略包名,不用写全类名)
+        -->
+        <!-- <package name="cn.raphuscucullatus.java.web.foundational.bean.entity"/> -->
+        <package name="cn.raphuscucullatus.java.web.foundational.bean"/>
+    </typeAliases>
+    <!--
+        environments: 表示多个数据库的配置环境信息
+        default: 表示默认使用那个环境
+        一般公司至少有三个环境
+        dev:开发环境
+        test:测试环境
+        pro:生产环境/线上环境
+        三个环境的数据库配置是不同的,因此要准备不同的配置
+        在公司做项目的时候,开发阶段连接开发环境的数据库,数据库的配置需要运维或者DBA的同事提供
+    -->
+    <environments default="local">
+        <!--    定义本地环境的数据库和事务配置    -->
+        <environment id="local">
+            <!--
+                    事务配置 type=JDBC 表示JDBC的事务
+                    开发项目的时候会替换成Spring的声明式事务
+            -->
+            <transactionManager type="JDBC"></transactionManager>
+            <!--
+                DataSource 数据源配置
+                type="POOLED" 表示使用MyBatis的内置连接池
+                开发项目的时候一般会替换成第三方连接池,例如Druid
+            -->
+            <dataSource type="POOLED">
+                <!--
+                    本地MySQL8.0的数据库配置
+                    mysql5.0此处应为 value="com.mysql.jdbc.Driver"
+                -->
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.userName}"/>
+                <property name="password" value="${jdbc.userPassword}"/>
+            </dataSource>
+        </environment>
+
+    </environments>
+
+    <!--
+    指定加载哪些映射配置文件
+    -->
+    <mappers>
+        <!--
+        映射配置文件的路径
+        开发项目是有多个*.xml文件,因此一般会使用包扫描
+        -->
+        <!--        <mapper resource="cn/raphuscucullatus/java/web/foundational/mapper/UserMapper.xml"/>-->
+        <package name="cn.raphuscucullatus.java.web.foundational.mapper"/>
+    </mappers>
+</configuration>

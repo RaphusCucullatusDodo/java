@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue生命周期</title>
+    <!--  1 引入vue.js    -->
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<h1>Vue生命周期</h1>
+<!--
+  2 准备vue的视图
+-->
+<div id="app">
+    <div v-html="message">
+
+    </div>
+</div>
+
+<script>
+    //3 创建Vue对象
+    let vm = new Vue({
+        el: "#app", //指定vue的视图
+        // template:"<h1>hello world</h1>",
+        data: { //数据模型
+            message: "hello world"
+        },
+        methods: {
+            /**
+             *
+             * @param lifecycleFunctionName 生命周期函数名称
+             * @param vueObject vue实例
+             */
+            showInfo(lifecycleFunctionName, vueObject) {
+                console.log("生命周期的钩子函数:" + lifecycleFunctionName)
+                console.log("数据模型的数据:" + vueObject.message)
+                console.log("el元素:" + vueObject.$el)
+                console.log("元素内容:" + document.getElementById("app").innerHTML)
+            }
+        },
+        //vue对象实例化完成之前调用该方法
+        beforeCreate() {
+            //不能此方法内发送异步请求给服务器,以及不能将服务器响应的数据赋值给数据模型
+            this.message = "hello,vue changed"
+            //vue对象未完成创建,无法调用showInfo()函数
+            this.showInfo("-----beforeCreated----", this)
+        },
+        //vue对象实例化完成之后调用该方法
+        created() {
+            //因此各异在这里给服务器发送异步请求,并且经服务器响应的结果赋值给数据模型
+            console.log("created message:" + this.message)
+            this.message = "hello,vue changed"
+            this.showInfo("-----created----", this)
+        },
+        //数据模型赋值给vue视图,但是没有赋值给真实视图
+        beforeMount() {
+            console.log("beforeMount message:" + this.message)
+            //因此各异在这里给服务器发送异步请求,并且经服务器响应的结果赋值给数据模型
+            this.showInfo("-----beforeMount----", this)
+        },
+        //生成页面上真正的DOM,DOM元素与el的元素是一致的
+        mounted() {
+            //获取视图的真实数据
+            console.log("mounted message:" + this.message)
+            this.showInfo("-----mounted----", this)
+
+        }
+
+
+    })
+</script>
+</body>
+</html>

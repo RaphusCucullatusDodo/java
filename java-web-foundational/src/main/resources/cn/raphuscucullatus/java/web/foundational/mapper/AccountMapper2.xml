@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+    #{}表示占位符,作用同JDBC中的?占位符
+    如果方法的参数是简单类型,例如 Long Integer String ,那么#{}内的值可以任意值,
+    但是为了可读性,应与方法参数名保持一致
+-->
+<mapper namespace="cn.raphuscucullatus.java.web.foundational.mapper.AccountMapper2">
+
+
+    <select id="findById" resultType="Account" parameterType="long">
+        <!-- 跨映射文件使用sql片段, 让refid的值等于 引用源的namespace+引用源的sql标签ID  -->
+        <include refid="cn.raphuscucullatus.java.web.foundational.mapper.AccountMapper.select_all"/>
+        where id = #{id}
+    </select>
+
+</mapper>

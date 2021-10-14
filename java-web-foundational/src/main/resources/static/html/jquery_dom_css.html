@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery操作样式</title>
+    <script src="../js/jquery-3.6.0.js"></script>
+    <style type="text/css">
+        .redStyle {
+            background: red;
+            width: 720px
+        }
+
+        .yellowStyle {
+            background: yellow;
+            width: 720px
+        }
+    </style>
+</head>
+<body>
+<h1>jQuery操作样式</h1>
+用户名:<input type="text" name="name" onmouseover="useRedStyle()" onmouseout="useYellowStyle()" id="name">
+<script>
+    function useRedStyle() {
+        //删除已有样式
+        $("#name").removeClass("yellowStyle")
+
+        $("#name").addClass("redStyle")
+    }
+
+    function useYellowStyle() {
+        // $("#name").removeClass("redStyle")
+
+        $("#name").addClass("yellowStyle")
+
+    }
+
+</script>
+</body>
+</html>

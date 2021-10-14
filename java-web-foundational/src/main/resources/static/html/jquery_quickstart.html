@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery入门程序</title>
+    <script src="../js/jquery-3.6.0.js"></script>
+</head>
+<body>
+<h1>jQuery的入门程序</h1>
+<script>
+    //页面加载完成后执行匿名函数
+    window.onload = function () {
+        let inputElement = document.getElementById("name");
+        console.log("window onload inputElement Value:" + inputElement)
+    }
+    //jQuery也可以绑定页面加载事件
+    $(function () {
+        let inputElement = document.getElementById("name");
+        console.log("jQuery onload inputElement Value:" + inputElement)
+    })
+</script>
+用户名:<input type="text" id="name" value="tony"/>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+    <script src="../js/jquery-3.6.0.js"></script>
+</head>
+<body>
+<div id="message" style="color: red"></div>
+<form action="../register" method="post">
+    用户名:<input type="text" name="name" onblur="checkName(this.value)"/>
+    <span id="messageImg"></span><br>
+    密码:<input type="password" name="password"/><br>
+    <input type="submit" value="提交"/>
+
+</form>
+
+<script>
+    /**
+     * 异步请求服务器校验用户名
+     */
+    function checkName(name) {
+        // $.get("请求地址","post参数",function(result){}) result默认为text(普通文本字符串)
+        $.post("../user", "method=checkName&name=" + name, function (result) {
+            console.log("JSON对象携带的errorMessage:" + result.errorMessage);
+            //    处理服务器的响应结果
+            console.log("JSON对象=" + result);
+            //服务器没有异常
+            if (result.flag) {
+                // $("#message").html("用户名可用")
+                $("#messageImg").html("<img src='../images/新疆-sun.jfif' width='60px' height='60px'/>")
+            } else {
+                //    服务器异常
+                $("#message").html(result.errorMessage)
+            }
+        }, "json")
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>异步修改账户信息</title>
+    <script src="../../js/jquery-3.6.0.js"></script>
+    <script src="../../js/getParameter.js"></script>
+
+</head>
+<body>
+<h1>异步修改账户信息</h1>
+<div style="color: red"></div>
+<!--
+onsubmit="return false 禁用表单的同步提交
+-->
+<div style="color: red" id="errorMessage"></div>
+<form action="account" method="post" onsubmit="return false" id="updateAccountForm">
+    <input type="hidden" name="method" value="accountUpdate"/>
+    <input type="hidden" name="id" id="id"/>
+    账户名:<input type="text" name="name" id="name"/><br/>
+    账户余额:<input type="text" name="balance" id="balance"/><br/>
+    账号状态:
+    <input type="radio" name="status" value="1" id="enableStatus"/>启用
+    <input type="radio" name="status" value="0" id="disableStatus"/>禁用<br/>
+    <input type="submit" value="提交" onclick="updateAccount()"/>
+</form>
+
+<script>
+    //异步请求回显数据
+    let accountId = getPatemeter("id");
+
+    // $.post("请求地址","post参数",function(result){}) result默认为text(普通文本字符串)
+    $.post("../../async/account", "method=toAccountUpdatePage&id=" + accountId, function (result) {
+        //处理响应内容
+        //若没有异常
+        if (result.flag) {
+            $("#id").val(result.data.id)
+            $("#name").val(result.data.name)
+            $("#balance").val(result.data.balance)
+            if (result.data.status == 0) {
+                $("#disableStatus").prop("checked", true)
+            } else {
+                $("#enableStatus").prop("checked", true)
+            }
+        } else {
+            $("#errorMessage").html("服务器异常")
+        }
+    }, "json")
+
+    /**
+     * 异步修改账号
+     */
+    function updateAccount() {
+        //serialize() 用于将表单所有数据拼接成请求参数数据字符串
+        // 即该表单所有的请求参数 method=addAccount&name=?&balance=?&status=?
+        let formRequestData = $("#updateAccountForm").serialize();
+        // $.post("请求地址","post参数",function(result){}) result默认为text(普通文本字符串) function为处理响应结果的匿名函数
+        $.post("../../async/account", formRequestData, function (result) {
+            console.log(result.flag)
+            //处理响应结果
+            if (result.flag) {
+                //    修改成功
+                if (result.data) {
+                    //跳转到账号列表页面
+                    location.href = "account_list.html"
+                }
+            } else {
+                $("#errorMessage").html("账号修改失败")
+            }
+        }, "json")
+    }
+
+
+</script>
+</body>
+</html>

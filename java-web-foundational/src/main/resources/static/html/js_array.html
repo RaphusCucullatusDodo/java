@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript编程之基本语法-数组</title>
+</head>
+<body>
+
+<script>
+    //定义
+    let array = ["java", 100, "python", 80, "go", 80]
+    //遍历
+    for (let i = 0; i < array.length; i++) {
+        console.log(array[i])
+    }
+    //数组拼接
+    left = ["java", "python", "go"]
+    right = [100, 80, 80]
+    let result = left.concat(right)
+    for (let i = 0; i < result.length; i++) {
+        console.log(result[i])
+    }
+    //数字元素按照指定规则拼接
+
+    //二维数组的创建和遍历
+    dities = [["北", "上"], ["广", "深"]]
+    for (let i = 0; i < dities.length; i++) {
+        for (let j = 0; j < dities[i].length; j++) {
+            console.log(dities[i][j])
+        }
+    }
+
+</script>
+</body>
+</html>
