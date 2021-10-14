@@ -8,5 +8,7 @@ package com.raphuscucullatus.git;
  * @since JDK11
  */
 public class VersionControlTest {
-
+    public static void main(String[] args) {
+        System.out.println("实现了输出文字");
+    }
 }
